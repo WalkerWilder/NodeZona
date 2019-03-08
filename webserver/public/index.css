@@ -1,0 +1,26 @@
+body {
+	background-color: whitesmoke;
+    display: flex;
+    margin: 0px;
+}
+
+#header {
+	background-color: aqua;
+	height: 100px;
+	flex-grow: 1;
+	padding: 10px;
+	display: flex;
+}
+
+#navbar {
+	flex-grow: 1;
+	background-color: blue;
+	margin-right: 10px;
+}
+
+#identidade {
+	min-width: 100px;
+	max-width: 10%;
+	flex-grow: 1;
+	background-color: blueviolet;
+}

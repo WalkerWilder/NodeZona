@@ -4,6 +4,8 @@ const fs = require('fs')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const querystring = require('querystring');
+const path = require('path');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -27,19 +29,23 @@ app.use((req, res, next) => {
 
 var sessionChecker = (req, res, next) => {
 	if (req.session.user && req.cookies.user_sid) {
-		res.redirect('/seila.html');
+		if (req.path != '/login.html') {
+			res.redirect(req.path);
+		} else {
+			res.redirect('/index.html');
+		}
 	} else {
 		next();
 	}
 };
 
-app.route('/login.html')
+app.route('/login.html*')
 .get(sessionChecker, (req, res) => {
 	res.sendFile(__dirname + '/public/login.html');
 })
 .post((req, res) => {
 	req.session.user = {username: req.body.username, password: req.body.password};
-	res.redirect('/seila.html');
+	res.redirect(req.params[0] || '/index.html');
 });
 
 app.get('/logout.html', (req, res) => {
@@ -51,15 +57,27 @@ app.get('/logout.html', (req, res) => {
 	}
 });
 
-app.use(express.static('public'))
-app.get('/', (req, res) => res.send('Como você chegou aqui?'))
 app.get('/*', (req, res) => {
-	if (fs.existsSync(req.path)) {
-		res.sendfile(req.path, { root: 'C:/node/webserver' })
+	if (fs.existsSync('public' + req.path) && path.extname('public' + req.path)) {
+		res.sendFile('/public' + req.path, {root: __dirname})
+	} else if (fs.existsSync('public' + req.path + '/index.html') || fs.existsSync('public' + req.path + 'index.html')) {
+		res.sendFile('/public' + (req.path + '/index.html').replace('//','/'), {root: __dirname});
+	} else if (fs.existsSync('private' + req.path) && path.extname('private' + req.path)) {
+		if (req.session.user && req.cookies.user_sid) {
+			res.sendFile('/private' + req.path, {root: __dirname})
+		} else {
+			res.redirect('/login.html?' + querystring.stringify({'origem': req.path}));
+		}
+	} else if (fs.existsSync('private' + req.path + '/index.html') || fs.existsSync('private' + req.path + 'index.html')) {
+		if (req.session.user && req.cookies.user_sid) {
+			res.sendFile('/private' + (req.path + '/index.html').replace('//','/'), {root: __dirname})
+		} else {
+			res.redirect('/login.html?' + querystring.stringify({'origem': (req.path + '/index.html').replace('//','/')}));
+		}
 	} else {
 		res.sendStatus(404);
+		res.end();
 	}
-	res.end();
 })
 app.post('/*.js', (req, res) => {
 	let funcao = req.headers.func;
