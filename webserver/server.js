@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const querystring = require('querystring');
 const path = require('path');
+const db = require('./db.js');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -43,9 +44,26 @@ app.route('/login.html*')
 .get(sessionChecker, (req, res) => {
 	res.sendFile(__dirname + '/public/login.html');
 })
-.post((req, res) => {
-	req.session.user = {username: req.body.username, password: req.body.password};
-	res.redirect(req.params[0] || '/index.html');
+.post( async (req, res) => {
+	const { verificaAcesso } = require('./controllers/usuarios.js');
+	const username = req.body.username;
+	const password = req.body.password;
+	let acesso = await verificaAcesso(username, password);
+	switch (acesso) {
+		case 1:
+			req.session.user = {username, password};
+			res.redirect(req.params[0] || '/index.html');
+			break;
+		case -1:
+			console.log({erro:{username, password}});
+			break;
+		case 0:
+			res.redirect(req.path);
+			break;
+		default:
+			res.redirect(req.path);
+			break;
+	}
 });
 
 app.get('/logout.html', (req, res) => {

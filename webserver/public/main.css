@@ -1,0 +1,86 @@
+body {
+	background-color: lightgrey;
+	display: flex;
+	margin: 0px;
+	font-family: Calibri;
+}
+
+#header {
+	background-color: teal;
+	height: 100px;
+	flex-grow: 1;
+	padding: 10px;
+	display: flex;
+	color: white;
+}
+
+#navbar {
+	flex-grow: 1;
+	margin-right: 10px;
+	display: flex;
+	align-items: center;
+}
+
+#navbar .seletor {
+	padding: 15px;
+	width: 15%;
+	flex-flow: wrap;
+	text-align: center;
+}
+
+#idhead {
+	border-left: 1px solid black;
+	min-width: 240px;
+}
+
+#identidade {
+	background-color: red;
+	position: absolute;
+	top: 120px;
+	right: -100%;
+	bottom: 0px;
+	width: 15%;
+	min-width: 250px;
+}
+
+.grow {
+	flex-grow: 1;
+}
+
+.right {
+	align-self: flex-end;
+}
+
+
+.spacing {
+	display: flex;
+}
+
+.spacing > * {
+	padding: 5px;
+}
+
+.spacing > .btn {
+	margin: 5px;
+}
+
+.spacing:last-child {
+	padding: 5px 5px 0px 5px;
+}
+
+.btn {
+	padding: 5px;
+	cursor: pointer;
+	border-radius: 7px;
+	font: bold 15px Calibri;
+	border: 1px solid;
+}
+
+.white {
+	color: black;
+	background-color: white;
+}
+
+.btn.white {
+	border-color: white;
+}
