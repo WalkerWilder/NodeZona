@@ -1,3 +1,9 @@
-const teste = () => {return 15348};
+const fs = require('fs');
 
-module.exports = { teste };
+const teste = () => {return 15348};
+const headers = () => {
+	let headers = fs.readFileSync('views/body.html','UTF8');
+	return headers;
+}
+
+module.exports = { teste, headers };

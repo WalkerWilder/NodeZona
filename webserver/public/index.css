@@ -1,0 +1,28 @@
+.controle {
+	max-width: 200px;
+	flex-grow: 1;
+	border: 5px solid black;
+	padding: 15px 10px 5px 10px;
+	border-radius: 20%;
+}
+
+.controle .top {
+	display: flex;
+	padding: 10px 15px;
+}
+
+.controle .top p {
+	flex-grow: 1;
+}
+
+.controle .top img {
+	height: 3%;
+}
+
+div.interruptor {
+	flex-grow: 1;
+	padding: 5% 15%;
+	align-self: unset;
+	border-top: 1px solid black;
+}
+
