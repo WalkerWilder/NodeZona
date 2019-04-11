@@ -1,14 +1,5 @@
 const { usuarioModelo } = require('../models/usuarios.js');
 const md5 = require('MD5');
-// Create an instance of model SomeModel
-// const usuario = new usuarioModelo({ usuario: 'Walker' });
-
-// // Save the new model instance, passing a callback
-// const saveUsuario = async () => {
-// 	usuario.save(function (err) {
-// 		if (err) return handleError(err);
-// 	});
-// }
 
 const verificaAcesso = async (usuario, senha) => {
 	let ret = -1;

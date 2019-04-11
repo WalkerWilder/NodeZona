@@ -4,6 +4,7 @@
 	border: 5px solid black;
 	padding: 15px 10px 5px 10px;
 	border-radius: 20%;
+	margin: 0px 10px 10px 0px;
 }
 
 .controle .top {
@@ -15,8 +16,8 @@
 	flex-grow: 1;
 }
 
-.controle .top img {
-	height: 3%;
+.controle .top svg {
+	height: 20px;
 }
 
 div.interruptor {
@@ -26,3 +27,10 @@ div.interruptor {
 	border-top: 1px solid black;
 }
 
+.ativo {
+	fill: green;
+}
+
+.inativo {
+	fill: black;
+}

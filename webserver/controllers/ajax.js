@@ -1,9 +1,9 @@
 const fs = require('fs');
 
-const teste = () => {return 15348};
-const headers = () => {
+const headers = async (req, res) => {
 	let headers = fs.readFileSync('views/body.html','UTF8');
-	return headers;
+	res.write(JSON.stringify(headers));
+	res.end();
 }
 
-module.exports = { teste, headers };
+module.exports = { headers };
