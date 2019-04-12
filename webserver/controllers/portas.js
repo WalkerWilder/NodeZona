@@ -1,4 +1,4 @@
-const { adicionarPorta, portasAtivas } = require('./../repositories/portas.js');
+const { adicionarPorta, portasAtivas, alteraPorta } = require('./../repositories/portas.js');
 
 const adicionarControle = async (req, res) => {
 	await adicionarPorta({
@@ -22,7 +22,7 @@ const listaPortasAtivas = async (req, res) => {
 };
 
 const listaControles = async (req, res) => {
-	let ret = await portasAtivas();
+	let ret = await portasAtivas(req.headers.filtro);
 	let html = '';
 	for (let i = 0; i < ret.length; i++) {
 		const controle = ret[i];
@@ -35,7 +35,7 @@ const listaControles = async (req, res) => {
 							<img fonte='img/config.svg'>\
 						</div>\
 					</div>\
-					<div class='interruptor ${estado}'>\
+					<div class='interruptor ${estado}' ativo='${controle.estado}' porta='${controle.porta}'>\
 						<img fonte='img/power.svg'>\
 					</div>\
 				</div>`;
@@ -44,4 +44,12 @@ const listaControles = async (req, res) => {
 	res.end();
 };
 
-module.exports = { adicionarControle, listaPortasAtivas, listaControles };
+const alteraEstado = async (req, res) => {
+	let porta = req.body.porta;
+	let estado = req.body.estado;
+	let ret = await alteraPorta(porta, estado);
+	res.json(ret);
+	res.end();
+}
+
+module.exports = { adicionarControle, listaPortasAtivas, listaControles, alteraEstado };

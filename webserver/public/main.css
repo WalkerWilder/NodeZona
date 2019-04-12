@@ -43,9 +43,9 @@ p {
 
 #identidade {
 	background-color: red;
-	position: absolute;
+	/* position: absolute; */
 	top: 120px;
-	right: -100%;
+	right: 0%;
 	bottom: 0px;
 	width: 15%;
 	min-width: 250px;

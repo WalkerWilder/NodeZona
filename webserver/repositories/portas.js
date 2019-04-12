@@ -22,4 +22,18 @@ const adicionarPorta = (porta) => {
 	).exec();
 };
 
-module.exports = { portasAtivas, adicionarPorta };
+const alteraPorta = (porta, estado) => {
+	portaModelo.findOneAndUpdate(
+		{
+			porta: porta
+		}, {
+			$set: { estado }
+		}, {
+			upsert: true,
+			new: true
+		}
+	).exec();
+	return true;
+};
+
+module.exports = { portasAtivas, adicionarPorta, alteraPorta };

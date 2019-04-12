@@ -1,6 +1,6 @@
-var ajxDat;
 
 $(() => {
+	let ajxDat;
 	$.ajax({
 		url: 'ajax.js',
 		method: 'POST',
@@ -18,7 +18,8 @@ $(() => {
 	getImages();
 });
 
-var getImages = () => {
+var getImages = (end) => {
+	let ajxDat;
 	const images = document.querySelectorAll('img');
 	images.forEach((a) => {
 		if (a.hasAttribute('fonte')) {
@@ -33,6 +34,9 @@ var getImages = () => {
 				},
 			}).done(function(data) {
 				$('img[fonte="' + fonte + '"]').replaceWith(data.documentElement);
+				if (end) {
+					end();
+				}
 			});
 		}
 	})
