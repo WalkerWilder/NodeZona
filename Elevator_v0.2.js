@@ -13,6 +13,10 @@ Elevatonator = {
             elevatorPassingFloor(elevator, floorNum, direction) {
             }
             elevatorStoppedAtFloor(elevator, floorNum) {
+                const call = (elevator.direction === 1) ? 'upCall' : 'downCall';
+                this.getFloorByNum(floorNum, (floor)=>{
+                    floor[call] = false;
+                })
                 elevator.destinationBucket.splice(elevator.destinationBucket.indexOf(floorNum), 1);
                 if (elevator.destinationBucket.length == 0) this.elevatorIdle(elevator);
             }
@@ -28,6 +32,10 @@ Elevatonator = {
                 if (floor.downCall) floor.downAt = new Date();
                 floor.downCall = true;
                 this.notifyElevators();
+            }
+            getFloorByNum(floorNum, next) {
+                const floors = this.floorBucket.filter((floor)=>{return floor.floorNum() == floorNum;});
+                next(floors[0]);
             }
             idleElevators(next) {
                 const a_elevators = this.elevatorBucket.filter((elevator) => {
